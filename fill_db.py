@@ -1,3 +1,6 @@
+"""
+Script for filling the database
+"""
 from tinydb import TinyDB
 
 
