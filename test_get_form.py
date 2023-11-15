@@ -6,7 +6,25 @@ from main import app
 client = TestClient(app)
 
 
-def test_get_template():
+def test_get_template_only_by_existing_fields():
+    headers = {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+    }
+
+    data = {
+        "client_name": "Tony Stark",
+        "client_email": "ironman@marvel.com",
+        "client_phone": "+7 999 987 65 65",
+        "order_date": "15.11.2023",
+    }
+    response = client.post("/get_form/", data=json.dumps(data), headers=headers)
+    print(response.text)
+    assert response.status_code == 200
+    assert response.text == '"OrderForm"'
+
+
+def test_get_template_with_filds_from_diffrent_templates():
     headers = {
         "accept": "application/json",
         "Content-Type": "application/json",
@@ -15,20 +33,12 @@ def test_get_template():
     data = {
         "user_name": "Piter Parker",
         "user_email": "spiderman@marvel.com",
-        "author_phone": "+7 987 125 52 52",
+        "user_password": "Secret",
         "registration_date": "2023-11-14",
+        "author_phone": "+7 987 125 52 52",
         "text_comment": "Comment user",
         "author_name": "Stive",
-        "user_password": "Secret",
-        "some_string": "blabla"
-
     }
-    # data = {
-    #     # "registration_dat": "14.11.2023"
-    #     # "registration_dat": "2023-11-14"
-    #     "client_phone": "+7 987 124 12 12"
-
-    # }
     response = client.post("/get_form/", data=json.dumps(data), headers=headers)
     print(response.text)
     assert response.status_code == 200
