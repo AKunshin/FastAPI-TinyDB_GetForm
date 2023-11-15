@@ -19,7 +19,6 @@ def test_get_template_only_by_existing_fields():
         "order_date": "15.11.2023",
     }
     response = client.post("/get_form/", data=json.dumps(data), headers=headers)
-    print(response.text)
     assert response.status_code == 200
     assert response.text == '"OrderForm"'
 
@@ -40,6 +39,25 @@ def test_get_template_with_filds_from_diffrent_templates():
         "author_name": "Stive",
     }
     response = client.post("/get_form/", data=json.dumps(data), headers=headers)
-    print(response.text)
     assert response.status_code == 200
     assert response.text == '"RegistrationForm"'
+
+
+def test_not_found_template():
+    headers = {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+    }
+
+    data = {
+        "user": "Eddie Brock",
+        "mail": "venom@marvel.com",
+        "pass": "Secret",
+        "registr_date": "2023-11-14",
+    }
+    response = client.post("/get_form/", data=json.dumps(data), headers=headers)
+    assert response.status_code == 200
+    assert (
+        response.text
+        == '{"user":"text","mail":"email","pass":"text","registr_date":"date"}'
+    )
