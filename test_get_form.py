@@ -15,9 +15,12 @@ def test_get_template():
     data = {
         "user_name": "Piter Parker",
         "user_email": "spiderman@marvel.com",
+        "author_phone": "+7 987 125 52 52",
         "registration_date": "2023-11-14",
-        # "text_comment": "Comment user",
+        "text_comment": "Comment user",
+        "author_name": "Stive",
         "user_password": "Secret",
+        "some_string": "blabla"
 
     }
     # data = {

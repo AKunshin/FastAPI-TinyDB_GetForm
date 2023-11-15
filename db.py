@@ -6,6 +6,8 @@ db = TinyDB("templates.json")
 
 Template = Query()
 
+db.truncate()
+# Очистка ДБ
 
 db.insert(
     {
@@ -37,7 +39,11 @@ db.insert(
 
 def search_template(request_params):
     request_with_types = {k: get_value_type(v) for k, v in request_params.items()}
-    template = db.search(Query().fragment(request_with_types))
-    if template:
-        return template[0]["name"]
+    temp_count = []
+    for field_name, field_type in request_with_types.items():
+        template = db.search(Query().fragment({field_name:field_type}))
+        if template:
+            temp_count.append(template[0]["name"])
+    if temp_count:
+        return max(temp_count)
     return request_with_types
