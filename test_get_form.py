@@ -7,29 +7,19 @@ client = TestClient(app)
 
 
 def test_get_template_only_by_existing_fields():
-    headers = {
-        "accept": "application/json",
-        "Content-Type": "application/json",
-    }
-
-    data = {
+    params = {
         "client_name": "Tony Stark",
         "client_email": "ironman@marvel.com",
         "client_phone": "+7 999 987 65 65",
         "order_date": "15.11.2023",
     }
-    response = client.post("/get_form/", data=json.dumps(data), headers=headers)
+    response = client.post("/get_form/", params=params)
     assert response.status_code == 200
     assert response.text == '"OrderForm"'
 
 
 def test_get_template_with_filds_from_diffrent_templates():
-    headers = {
-        "accept": "application/json",
-        "Content-Type": "application/json",
-    }
-
-    data = {
+    params = {
         "user_name": "Piter Parker",
         "user_email": "spiderman@marvel.com",
         "user_password": "Secret",
@@ -38,24 +28,19 @@ def test_get_template_with_filds_from_diffrent_templates():
         "text_comment": "Comment user",
         "author_name": "Stive",
     }
-    response = client.post("/get_form/", data=json.dumps(data), headers=headers)
+    response = client.post("/get_form/", params=params)
     assert response.status_code == 200
     assert response.text == '"RegistrationForm"'
 
 
 def test_not_found_template():
-    headers = {
-        "accept": "application/json",
-        "Content-Type": "application/json",
-    }
-
-    data = {
+    params = {
         "user": "Eddie Brock",
         "mail": "venom@marvel.com",
         "pass": "Secret",
         "registr_date": "2023-11-14",
     }
-    response = client.post("/get_form/", data=json.dumps(data), headers=headers)
+    response = client.post("/get_form/", params=params)
     assert response.status_code == 200
     assert (
         response.text
